@@ -1,4 +1,4 @@
-package www3.ntu.edu.sg;
+package www3.ntu.edu.sg.cube;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +7,9 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import www3.ntu.edu.sg.R;
+import www3.ntu.edu.sg.R.drawable;
 
 import android.content.Context;
 import android.graphics.Bitmap;

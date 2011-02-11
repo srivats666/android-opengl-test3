@@ -3,17 +3,14 @@ package www3.ntu.edu.sg;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import www3.ntu.edu.sg.cube.PhotoCube;
 import www3.ntu.edu.sg.cube.TextureCube;
 import android.content.Context;
-import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 
-//public class MyGLRenderer implements Renderer {
-public class MyGLRenderer implements GLSurfaceView.Renderer {
+public class MyGLRenderer implements Renderer {
+//public class MyGLRenderer implements GLSurfaceView.Renderer {
 	Context context;
-	
-	int currentTextureFilter = 0;  // Texture filter (NEW)
 
 //	private  Triangle triangle;
 //	Square quad;
@@ -40,11 +37,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	   float z = -6.0f;    // (NEW)
 
 
+	   int currentTextureFilter = 0;  // Texture filter
+
+	   // Lighting (NEW)
+	   boolean lightingEnabled = false;   // Is lighting on? (NEW)
+	   private float[] lightAmbient = {0.5f, 0.5f, 0.5f, 1.0f};
+	   private float[] lightDiffuse = {1.0f, 1.0f, 1.0f, 1.0f};
+	   private float[] lightPosition = {0.0f, 0.0f, 2.0f, 1.0f};
+
 	   
 	  // private static float anglePyramid = 0; // Rotational angle in degree for pyramid (NEW)
-	   private static float angleCube = 0;    // Rotational angle in degree for cube (NEW)
+	 //  private static float angleCube = 0;    // Rotational angle in degree for cube (NEW)
 	 //  private static float speedPyramid = 2.0f; // Rotational speed for pyramid (NEW)
-	   private static float speedCube = -1.5f;   // Rotational speed for cube (NEW)
+	  // private static float speedCube = -1.5f;   // Rotational speed for cube (NEW)
 
 
 	public MyGLRenderer(Context context) {
@@ -87,6 +92,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		
 	      gl.glEnable(GL10.GL_TEXTURE_2D);  // Enable texture (NEW)
 
+	   // Setup lighting GL_LIGHT1 with ambient and diffuse lights (NEW)
+	      gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_AMBIENT, lightAmbient, 0);
+	      gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_DIFFUSE, lightDiffuse, 0);
+	      gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_POSITION, lightPosition, 0);
+	      gl.glEnable(GL10.GL_LIGHT1);   // Enable Light 1 (NEW)
+	      gl.glEnable(GL10.GL_LIGHT0);   // Enable the default Light 0 (NEW)
 
 	}
 
@@ -96,6 +107,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
 		// You OpenGL|ES rendering code here
+		// Enable lighting? (NEW)
+	      if (lightingEnabled) {
+	         gl.glEnable(GL10.GL_LIGHTING);
+	      } else {
+	         gl.glDisable(GL10.GL_LIGHTING);
+	      }
+
 //		gl.glLoadIdentity(); // Reset model-view matrix ( NEW )
 //		gl.glTranslatef(-1.5f, 0.0f, -6.0f); // Translate left and into the screen ( NEW )
 //		gl.glRotatef(angleTriangle, 0.0f, 1.0f, 0.0f); // Rotate the triangle about the y-axis (NEW)

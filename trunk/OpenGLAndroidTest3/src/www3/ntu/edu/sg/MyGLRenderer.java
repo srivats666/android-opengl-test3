@@ -4,15 +4,17 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import www3.ntu.edu.sg.cube.PhotoCube;
-
+import www3.ntu.edu.sg.cube.TextureCube;
 import android.content.Context;
-import android.opengl.GLSurfaceView.Renderer;
+import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
-public class MyGLRenderer implements Renderer {
-
+//public class MyGLRenderer implements Renderer {
+public class MyGLRenderer implements GLSurfaceView.Renderer {
 	Context context;
 	
+	int currentTextureFilter = 0;  // Texture filter (NEW)
+
 //	private  Triangle triangle;
 //	Square quad;
 //	 
@@ -27,7 +29,8 @@ public class MyGLRenderer implements Renderer {
 	   //private Cube1 cube; 
 	   //private Cube2 cube; 	   
 	  // private TextureCube cube;
-	   private PhotoCube cube;   
+	  // private PhotoCube cube;   
+	  private TextureCube cube;
 	   
 	   // For controlling cube's z-position, x and y angles and speeds (NEW)
 	   float angleX = 0;   // (NEW)
@@ -57,7 +60,8 @@ public class MyGLRenderer implements Renderer {
 	      //cube = new Cube1(); 
 	     // cube = new Cube2();   
 	    //  cube = new TextureCube();  
-		 cube = new PhotoCube(context);
+		 //cube = new PhotoCube(context);
+		 cube = new TextureCube();  
 	}
 
 	@Override
@@ -78,8 +82,9 @@ public class MyGLRenderer implements Renderer {
 		// You OpenGL|ES initialization code here
 		// Setup Texture, each time the surface is created (NEW)
 	    //  cube.loadTexture(gl, context);    // Load image into Texture (NEW)
-		cube.loadTexture(gl);             // Load images into textures (NEW)
-
+		//cube.loadTexture(gl);             // Load images into textures (NEW)
+		cube.loadTexture(gl, context);
+		
 	      gl.glEnable(GL10.GL_TEXTURE_2D);  // Enable texture (NEW)
 
 
@@ -139,7 +144,9 @@ public class MyGLRenderer implements Renderer {
 	      gl.glTranslatef(0.0f, 0.0f, z);   // Translate into the screen (NEW)
 	      gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f); // Rotate (NEW)
 	      gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f); // Rotate (NEW)
-	      cube.draw(gl);
+	      
+	      //cube.draw(gl);
+	      cube.draw(gl, currentTextureFilter); 
 	      
 	      // Update the rotational angle after each refresh (NEW)
 	      angleX += speedX;  // (NEW)

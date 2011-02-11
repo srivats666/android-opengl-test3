@@ -50,6 +50,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
 		case KeyEvent.KEYCODE_Z: // Zoom in (increase z)
 			renderer.z += 0.2f;
 			break;
+		case KeyEvent.KEYCODE_F:  //KEYCODE_DPAD_CENTER:  // Select texture filter (NEW)
+            renderer.currentTextureFilter = (renderer.currentTextureFilter + 1) % 3;
+            break;
+
 		}
 		return true; // Event handled
 	}

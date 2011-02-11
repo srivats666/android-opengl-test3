@@ -1,4 +1,4 @@
-package www3.ntu.edu.sg;
+package www3.ntu.edu.sg.cube;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

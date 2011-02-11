@@ -54,6 +54,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
             renderer.currentTextureFilter = (renderer.currentTextureFilter + 1) % 3;
             break;
 
+		case KeyEvent.KEYCODE_L:  // Toggle lighting on/off (NEW) 
+            renderer.lightingEnabled = !renderer.lightingEnabled;
+            break;
+
 		}
 		return true; // Event handled
 	}
